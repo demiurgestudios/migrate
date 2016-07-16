@@ -9,9 +9,9 @@ import (
 	"time"
 
 	"github.com/gocql/gocql"
-	"github.com/mattes/migrate/driver"
-	"github.com/mattes/migrate/file"
-	"github.com/mattes/migrate/migrate/direction"
+	"github.com/demiurgestudios/migrate/driver"
+	"github.com/demiurgestudios/migrate/file"
+	"github.com/demiurgestudios/migrate/migrate/direction"
 )
 
 type Driver struct {

@@ -1,4 +1,4 @@
-IMAGE=mattes/migrate
+IMAGE=demiurgestudios/migrate
 DCR=docker-compose run --rm
 .PHONY: clean test build release docker-build docker-push run
 

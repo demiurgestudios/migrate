@@ -1,6 +1,6 @@
 // Package main is the CLI.
 // You can use the CLI via Terminal.
-// import "github.com/mattes/migrate/migrate" for usage within Go.
+// import "github.com/demiurgestudios/migrate/migrate" for usage within Go.
 package main
 
 import (
@@ -11,15 +11,15 @@ import (
 	"time"
 
 	"github.com/fatih/color"
-	_ "github.com/mattes/migrate/driver/bash"
-	_ "github.com/mattes/migrate/driver/cassandra"
-	_ "github.com/mattes/migrate/driver/mysql"
-	_ "github.com/mattes/migrate/driver/postgres"
-	_ "github.com/mattes/migrate/driver/sqlite3"
-	"github.com/mattes/migrate/file"
-	"github.com/mattes/migrate/migrate"
-	"github.com/mattes/migrate/migrate/direction"
-	pipep "github.com/mattes/migrate/pipe"
+	_ "github.com/demiurgestudios/migrate/driver/bash"
+	_ "github.com/demiurgestudios/migrate/driver/cassandra"
+	_ "github.com/demiurgestudios/migrate/driver/mysql"
+	_ "github.com/demiurgestudios/migrate/driver/postgres"
+	_ "github.com/demiurgestudios/migrate/driver/sqlite3"
+	"github.com/demiurgestudios/migrate/file"
+	"github.com/demiurgestudios/migrate/migrate"
+	"github.com/demiurgestudios/migrate/migrate/direction"
+	pipep "github.com/demiurgestudios/migrate/pipe"
 )
 
 var url = flag.String("url", os.Getenv("MIGRATE_URL"), "")
@@ -156,6 +156,17 @@ func main() {
 			os.Exit(1)
 		}
 		fmt.Println(version)
+
+	// DS_JAZ:
+	case "count_up":
+		verifyMigrationsPath(*migrationsPath)
+		count, err := migrate.CountUp(*url, *migrationsPath)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		fmt.Println(count)
+	// /DS_JAZ:
 
 	default:
 		fallthrough

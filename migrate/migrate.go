@@ -11,11 +11,28 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mattes/migrate/driver"
-	"github.com/mattes/migrate/file"
-	"github.com/mattes/migrate/migrate/direction"
-	pipep "github.com/mattes/migrate/pipe"
+	"github.com/demiurgestudios/migrate/driver"
+	"github.com/demiurgestudios/migrate/file"
+	"github.com/demiurgestudios/migrate/migrate/direction"
+	pipep "github.com/demiurgestudios/migrate/pipe"
 )
+
+// DS_JAZ: Demiurge specific utility - returns the # of migrations
+// that would be applied if Up() was run.
+func CountUp(url, migrationsPath string) (int, error) {
+	_, files, version, err := initDriverAndReadMigrationFilesAndGetVersion(url, migrationsPath)
+	if err != nil {
+		return 0, err
+	}
+
+	applyMigrationFiles, err := files.ToLastFrom(version)
+	if err != nil {
+		return 0, err
+	}
+
+	return len(applyMigrationFiles), nil
+}
+// /DS_JAZ:
 
 // Up applies all available migrations
 func Up(pipe chan interface{}, url, migrationsPath string) {
